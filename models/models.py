@@ -2,15 +2,21 @@ from django.db import models
 
 # Create your models here.
 class AnswerType(models.Model):
-    type = models.TextField(max_length=64)
+    type = models.CharField(max_length=64)
+
+    def __str__(self):
+        return "[AnswerType: " + self.type + "]"
 
 
 class Category(models.Model):
-    category = models.TextField(max_length=64)
+    category = models.CharField(max_length=64)
+
+    def __str__(self):
+        return "[Category: " + self.category + "]"
 
 
 class Answer(models.Model):
-    answer = models.TextField(max_length=128)
+    answer = models.CharField(max_length=128)
     type = models.ForeignKey(AnswerType, on_delete=models.SET_NULL, null=True)
     category = models.ForeignKey(Category, on_delete=models.SET_NULL, null=True)
 
