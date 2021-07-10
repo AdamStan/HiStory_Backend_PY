@@ -3,6 +3,7 @@ from fileloader.save import SaveQuestionsFromFile
 import unittest
 from django.test import TestCase
 from fileloader.ods_loader import LoaderODS
+from fileloader.xlsx_loader import LoaderXLSX
 
 
 class TestODSLoader(unittest.TestCase):
@@ -15,6 +16,19 @@ class TestODSLoader(unittest.TestCase):
         questions = self.loader.questions
         self.assertEqual(questions[0].text, "W których latach toczyła się pierwsza wojna punicka?")
         self.assertEqual(12, len(questions))
+
+
+class TestXLSXLoader(unittest.TestCase):
+
+    def setUp(self):
+        self.loader = LoaderXLSX("/home/adam/Projects/hi_story/fileloader/file.ods")
+        self.loader.load()
+
+    def test_ods_loader_questions(self):
+        questions = self.loader.questions
+        self.assertEqual(questions[0].text, "W których latach toczyła się pierwsza wojna punicka?")
+        self.assertEqual(12, len(questions))
+
 
 
 class TestSavingQuestionsFromFile(TestCase):
