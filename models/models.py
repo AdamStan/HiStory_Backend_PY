@@ -20,7 +20,19 @@ class Answer(models.Model):
     type = models.ForeignKey(AnswerType, on_delete=models.SET_NULL, null=True)
     category = models.ForeignKey(Category, on_delete=models.SET_NULL, null=True)
 
+    def category_name(self):
+        return self.category.category
+
+    def __str__(self):
+        return "[Answer: " + self.answer + "]"
+
 
 class Question(models.Model):
     text = models.TextField(max_length=256)
     correct_answer = models.ForeignKey(Answer, on_delete=models.CASCADE)
+
+    def correct_answer_value(self):
+        return self.correct_answer.answer
+
+    def category_name(self):
+        return self.correct_answer.category.category
