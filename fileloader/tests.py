@@ -34,17 +34,15 @@ class TestXLSXLoader(unittest.TestCase):
 class TestSavingQuestionsFromFile(TestCase):
 
     def setUp(self):
-        loader = LoaderODS("/home/adam/Projects/hi_story/fileloader/file.ods")
-        loader.load()
-        self.questions = loader.questions
+        self.loader = LoaderODS("/home/adam/Projects/hi_story/fileloader/file.ods")
 
     def test_questions_saving(self):
-        SaveQuestionsFromFile(self.questions).save_questions()
+        SaveQuestionsFromFile(self.loader).save_questions()
         questions = Question.objects.all()
         answer_types = AnswerType.objects.all()
         categries = Category.objects.all()
         answers = Answer.objects.all()
-        self.assertEqual(len(questions), len(self.questions))
+        self.assertEqual(len(questions), len(self.loader.questions))
         self.assertEqual(2, len(answer_types), answer_types)
         self.assertEqual(1, len(categries), categries)
         # one answer is the same
