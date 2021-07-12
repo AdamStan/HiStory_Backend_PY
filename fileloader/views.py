@@ -1,5 +1,4 @@
-from fileloader.xlsx_loader import LoaderXLSX
-from fileloader.ods_loader import LoaderODS
+from fileloader.loaders import LoaderXLSX, LoaderODS
 from django.shortcuts import render
 
 from django.shortcuts import render

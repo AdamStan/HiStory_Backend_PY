@@ -2,8 +2,7 @@ from models.models import Answer, AnswerType, Category, Question
 from fileloader.save import SaveQuestionsFromFile
 import unittest
 from django.test import TestCase
-from fileloader.ods_loader import LoaderODS
-from fileloader.xlsx_loader import LoaderXLSX
+from fileloader.loaders import LoaderODS, LoaderXLSX
 
 
 class TestODSLoader(unittest.TestCase):
