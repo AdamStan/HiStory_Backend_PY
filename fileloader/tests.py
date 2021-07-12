@@ -1,9 +1,9 @@
 from models.models import Answer, AnswerType, Category, Question
-from fileloader.save import SaveQuestionsFromFile
+from fileloader.save import SaveQuestionsFromFile, TemporaryFileManager
 import unittest
 from django.test import TestCase
 from fileloader.loaders import LoaderODS, LoaderXLSX
-
+import os
 
 class TestODSLoader(unittest.TestCase):
 
@@ -28,6 +28,27 @@ class TestXLSXLoader(unittest.TestCase):
         self.assertEqual(questions[0].text, "W których latach toczyła się pierwsza wojna punicka?")
         self.assertEqual(12, len(questions))
 
+
+class TemporaryFileManagerTests(unittest.TestCase):
+    class MockFile:
+        def __init__(self, file_name):
+            self.name = file_name
+        
+        def chunks(self):
+            return [bytes("abc", "utf-8"),]
+
+    def test_save_and_remove_file(self):
+        file = TemporaryFileManagerTests.MockFile("test.xlsx")
+        PATH_TO_DOWNLOAD = os.path.join(
+            os.path.dirname(os.path.realpath(__file__)), "download")
+
+        manager = TemporaryFileManager(PATH_TO_DOWNLOAD, file)
+        manager.save_file()
+        temp_file_path = os.path.join(PATH_TO_DOWNLOAD, manager.temp_file_name + ".xlsx")
+        print(temp_file_path)
+        self.assertTrue(os.path.isfile(temp_file_path))
+        manager.remove_file()
+        self.assertFalse(os.path.isfile(temp_file_path))
 
 
 class TestSavingQuestionsFromFile(TestCase):
