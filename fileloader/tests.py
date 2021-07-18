@@ -1,9 +1,11 @@
+from fileloader.help import get_extension
 from models.models import Answer, AnswerType, Category, Question
 from fileloader.save import SaveQuestionsFromFile, TemporaryFileManager
 import unittest
 from django.test import TestCase
-from fileloader.loaders import LoaderODS, LoaderXLSX
+from fileloader.loaders import LoaderFactory, LoaderODS, LoaderXLSX
 import os
+from .help import get_extension
 
 class TestODSLoader(unittest.TestCase):
 
@@ -68,3 +70,42 @@ class TestSavingQuestionsFromFile(TestCase):
         # one answer is the same
         self.assertEqual(len(questions) - 1, len(answers))
     
+
+class TestGetExtesion(unittest.TestCase):
+
+    def test_get_extension_1(self):
+        file_name = "super.ext"
+        extension = get_extension(file_name)
+        self.assertEqual("ext", extension)
+
+    def test_get_extension_2(self):
+        file_name = "super.ext.xlsx"
+        extension = get_extension(file_name)
+        self.assertEqual("xlsx", extension)
+
+    def test_get_extension_3(self):
+        linux_path = "/super/folder/name/super.ext"
+        extension = get_extension(linux_path)
+        self.assertEqual("ext", extension)
+
+    def test_get_extension_4(self):
+        windows_path = "C:\\super\\folder\\name\\super.ext"
+        extension = get_extension(windows_path)
+        self.assertEqual("ext", extension)
+
+
+class TestLoaderFactory(unittest.TestCase):
+
+    def test_loader_not_supported_extension(self):
+        file_name = "super.ext"
+        self.assertRaises(ValueError, LoaderFactory.create_loader, file_name)
+
+    def test_loader_xlsx(self):
+        file_name = "super.xlsx"
+        loader = LoaderFactory.create_loader(file_name)
+        self.assertIsInstance(loader, LoaderXLSX)
+
+    def test_loader_ods(self):
+        file_name = "super.ods"
+        loader = LoaderFactory.create_loader(file_name)
+        self.assertIsInstance(loader, LoaderODS)

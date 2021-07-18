@@ -2,6 +2,7 @@ from abc import abstractmethod
 from models.models import Answer, AnswerType, Category, Question
 from pandas_ods_reader import read_ods
 import pandas as pd
+from .help import get_extension
 
 
 class Loader:
@@ -39,3 +40,16 @@ class LoaderXLSX(Loader):
     def read(self, sheet_index):
         return pd.read_excel(self.path, sheet_index)
 
+
+class LoaderFactory:
+
+    @staticmethod
+    def create_loader(path_to_temp_file):
+        extension = get_extension(path_to_temp_file)
+        if extension == "xlsx":
+            loader = LoaderXLSX(path_to_temp_file)
+        elif extension == "ods":
+            loader = LoaderODS(path_to_temp_file)
+        else:
+            raise ValueError("File extension '" + extension + "' not supported!")
+        return loader

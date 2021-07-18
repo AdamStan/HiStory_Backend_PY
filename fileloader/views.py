@@ -1,11 +1,10 @@
-from fileloader.loaders import LoaderXLSX, LoaderODS
+from fileloader.loaders import LoaderFactory, LoaderXLSX, LoaderODS
 from django.shortcuts import render
 
 from django.shortcuts import render
 from .forms import UploadFileForm
 from .save import SaveQuestionsFromFile, TemporaryFileManager
 import os
-from .help import get_extension
 
 PATH_TO_DOWNLOAD = os.path.join(os.path.dirname(os.path.realpath(__file__)), "download")
 
@@ -25,17 +24,10 @@ def upload_file(request):
 
 
 def handle_uploaded_file(file):
-    # print(PATH_TO_DOWNLOAD)
     manager = TemporaryFileManager(PATH_TO_DOWNLOAD, file)
     path_to_temp_file = manager.save_file()
     try:
-        extension = get_extension(file.name)
-        if extension == "xlsx":
-            loader = LoaderXLSX(path_to_temp_file)
-        elif extension == "ods":
-            loader = LoaderODS(path_to_temp_file)
-        else:
-            raise Exception("File extension '" + extension + "' not supported!")
+        loader = LoaderFactory.create_loader(path_to_temp_file)
         SaveQuestionsFromFile(loader).save_questions()
     finally:
         manager.remove_file()
