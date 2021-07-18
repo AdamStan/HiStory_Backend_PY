@@ -1,0 +1,20 @@
+{% extends "admin/change_form.html" %}
+{% block title %}
+Add questions from file
+{% endblock %}
+{% block content %}
+<h2>Upload</h2>
+<p>Please select file, supported file are: .ods, .xlsx </p>
+<form enctype="multipart/form-data" method="POST">
+    {% csrf_token %}
+    <label for="id_file">File:</label>
+    <input type="file" name="file" required="" id="id_file">
+    <br>
+    <span class="helptext">supported extensions are: .ods and .xlsx</span>
+    <br>
+    <input type="submit" value="Upload"> 
+    {% if message_succ %}
+    <p> {{ message_succ }}</p>
+    {% endif %}
+</form>
+{% endblock %}
