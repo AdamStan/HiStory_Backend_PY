@@ -1,5 +1,3 @@
-from django.contrib.admin import options
-from models.forms import QuestionForm
 from models.models import Answer, AnswerType, Category, Question
 from django.contrib import admin
 

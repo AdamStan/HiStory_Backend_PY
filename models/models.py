@@ -2,6 +2,8 @@ from django.db import models
 
 # Create your models here.
 class AnswerType(models.Model):
+    class Meta:
+        db_table = "answers_types"
     type = models.CharField(max_length=64)
 
     def __str__(self):
@@ -9,6 +11,8 @@ class AnswerType(models.Model):
 
 
 class Category(models.Model):
+    class Meta:
+        db_table = "categories"
     category = models.CharField(max_length=64)
 
     def __str__(self):
@@ -16,6 +20,8 @@ class Category(models.Model):
 
 
 class Answer(models.Model):
+    class Meta:
+        db_table = "answers"
     answer = models.CharField(max_length=128)
     type = models.ForeignKey(AnswerType, on_delete=models.SET_NULL, null=True)
     category = models.ForeignKey(Category, on_delete=models.SET_NULL, null=True)
@@ -28,6 +34,8 @@ class Answer(models.Model):
 
 
 class Question(models.Model):
+    class Meta:
+        db_table = "questions"
     text = models.TextField(max_length=256)
     correct_answer = models.ForeignKey(Answer, on_delete=models.CASCADE)
 
