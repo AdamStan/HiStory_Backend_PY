@@ -7,18 +7,10 @@ class QuestionAdmin(admin.ModelAdmin):
 
 
 class QuestionAdminLoadingFromFile(QuestionAdmin):
-    add_form_template = "upload_admin.html" 
-
-    def save_form(self, request, form, change):
-        print("Save form!!!")
-        return super().save_form(request, form, change)
-
-    def save_model(self, request, obj, form, change) -> None:
-        print("Save model!!!")
-        return super().save_model(request, obj, form, change)
+    add_form_template = "upload_admin.html"
 
 
-class QuestionsAddingFromFile(Question):
+class QuestionsFromFile(Question):
     class Meta:
         proxy = True
 
@@ -28,7 +20,7 @@ class AnswerAdmin(admin.ModelAdmin):
 
 # Register your models here.
 admin.site.register(Question, QuestionAdmin)
-admin.site.register(QuestionsAddingFromFile, QuestionAdminLoadingFromFile)
+admin.site.register(QuestionsFromFile, QuestionAdminLoadingFromFile)
 admin.site.register(Answer, AnswerAdmin)
 admin.site.register(Category)
 admin.site.register(AnswerType)
