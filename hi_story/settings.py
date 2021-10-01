@@ -81,7 +81,7 @@ DATABASES = {
         'NAME': 'his_database_pol',
         'USER': 'hist_user',
         'PASSWORD': 'haslo12345',
-        'HOST': 'localhost',
+        'HOST': 'db',
         'PORT': '5432'
     }
 }
