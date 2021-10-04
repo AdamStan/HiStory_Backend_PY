@@ -21,14 +21,19 @@ class QuestionSerializer(serializers.HyperlinkedModelSerializer):
         model = Question
         fields = ["id", "text", "correct_answer"]
 
+    correct_answer = serializers.SerializerMethodField('get_answer')
+
+    def get_answer(self, question):
+        return question.correct_answer.to_dict()
+
 
 class AnswerSerializer(serializers.HyperlinkedModelSerializer):
-    type = serializers.SerializerMethodField('get_type')
-    category = serializers.SerializerMethodField('get_category')
-
     class Meta:
         model = Answer
         fields = ["id", "answer", "type", "category"]
+
+    type = serializers.SerializerMethodField('get_type')
+    category = serializers.SerializerMethodField('get_category')
 
     def get_type(self, answer):
         return answer.type.to_dict()

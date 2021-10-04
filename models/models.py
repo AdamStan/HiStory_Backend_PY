@@ -38,6 +38,9 @@ class Answer(models.Model):
     def __str__(self):
         return "[Answer: " + self.answer + "]"
 
+    def to_dict(self):
+        return {"id": self.id, "answer": self.answer, "type": self.type.to_dict(), "category": self.category.to_dict()}
+
 
 class Question(models.Model):
     class Meta:
