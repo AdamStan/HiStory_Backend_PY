@@ -1,5 +1,6 @@
 from django.db import models
 
+
 # Create your models here.
 class AnswerType(models.Model):
     class Meta:

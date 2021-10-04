@@ -1,0 +1,12 @@
+docker-compose up
+docker-compose ps
+docker kill <container_id>
+docker-compose stop
+docker image rm history_backend_py_web
+docker ps -a
+docker image ls
+docker rmi $(docker images --filter “dangling=true” -q --no-trunc)
+docker build -rm
+docker container rm <container_id>
+docker image rm <container_id>
+sudo docker exec -it <container_id> python manage.py createsuperuser
