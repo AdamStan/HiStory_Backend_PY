@@ -10,6 +10,9 @@ class AnswerType(models.Model):
     def __str__(self):
         return "[AnswerType: " + self.type + "]"
 
+    def to_dict(self):
+        return {"id": self.id, "name": self.type}
+
 
 class Category(models.Model):
     class Meta:
@@ -19,6 +22,8 @@ class Category(models.Model):
     def __str__(self):
         return "[Category: " + self.category + "]"
 
+    def to_dict(self):
+        return {"id": self.id, "name": self.category}
 
 class Answer(models.Model):
     class Meta:
