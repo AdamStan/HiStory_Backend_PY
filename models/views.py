@@ -19,36 +19,54 @@ def upload_file(request):
 
 
 class AnswerTypeViewSet(viewsets.ModelViewSet):
-    """
-    API endpoint that allows users to be viewed or edited.
-    """
     queryset = AnswerType.objects.all()
     serializer_class = AnswerTypeSerializer
     permission_classes = [permissions.AllowAny]
 
 
 class AnswerViewSet(viewsets.ModelViewSet):
-    """
-    API endpoint that allows users to be viewed or edited.
-    """
     queryset = Answer.objects.all()
     serializer_class = AnswerSerializer
     permission_classes = [permissions.AllowAny]
+    http_method_names = ['get']
+
+    def get_queryset(self):
+        queryset = self.queryset
+
+        type_name = self.request.query_params.get("type")
+        if type_name:
+            queryset = queryset.filter(type__type=type_name)
+
+        category_name = self.request.query_params.get("category")
+        if category_name:
+            queryset = queryset.filter(category__category=category_name)
+
+        return queryset
 
 
 class CategoryViewSet(viewsets.ModelViewSet):
-    """
-    API endpoint that allows users to be viewed or edited.
-    """
     queryset = Category.objects.all()
     serializer_class = CategorySerializer
     permission_classes = [permissions.AllowAny]
+    http_method_names = ['get']
+
+    def get_queryset(self):
+        category_name = self.request.query_params.get("category")
+        if category_name:
+            return self.queryset.filter(category=category_name)
+        return self.queryset
 
 
 class QuestionViewSet(viewsets.ModelViewSet):
-    """
-    API endpoint that allows users to be viewed or edited.
-    """
     queryset = Question.objects.all()
     serializer_class = QuestionSerializer
     permission_classes = [permissions.AllowAny]
+    http_method_names = ['get']
+
+    def get_queryset(self):
+        queryset = self.queryset
+        categories = self.request.query_params.getlist("category")
+        print(categories)
+        if categories:
+            queryset = self.queryset.filter(correct_answer__category__category__in=categories)
+        return queryset
