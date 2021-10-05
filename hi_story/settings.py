@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'rest_framework',
     'models',
     'fileloader',
 ]
@@ -81,7 +82,7 @@ DATABASES = {
         'NAME': 'his_database_pol',
         'USER': 'hist_user',
         'PASSWORD': 'haslo12345',
-        'HOST': 'localhost',
+        'HOST': 'db',
         'PORT': '5432'
     }
 }
