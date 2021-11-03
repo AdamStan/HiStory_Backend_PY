@@ -2,6 +2,7 @@ version: "3.9"
 
 services:
   db:
+    container_name: questions_db
     image: postgres
     volumes:
       - ./data/db:/var/lib/postgresql/data
@@ -9,7 +10,10 @@ services:
       - POSTGRES_DB=his_database_pol
       - POSTGRES_USER=hist_user
       - POSTGRES_PASSWORD=haslo12345
+    networks:
+      - back_net
   web:
+    container_name: questions.server
     build: .
     command: >
       bash -c "
@@ -23,3 +27,8 @@ services:
       - "8000:8000"
     depends_on:
       - db
+    networks:
+      - back_net
+networks:
+  back_net:
+    driver: bridge

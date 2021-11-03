@@ -10,3 +10,8 @@ docker build -rm .
 docker container rm <container_id>
 docker image rm <image_id>
 sudo docker exec -it <container_id> python manage.py createsuperuser
+docker network ls
+docker network rm history_backend_default
+docker network rm history_backend_py_default
+docker network inspect
+docker-compose up --force-recreate <name>
