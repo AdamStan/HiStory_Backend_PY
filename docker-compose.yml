@@ -10,6 +10,8 @@ services:
       - POSTGRES_DB=his_database_pol
       - POSTGRES_USER=hist_user
       - POSTGRES_PASSWORD=haslo12345
+    ports:
+      - "5432:5432"
     networks:
       - back_net
   web:
