@@ -5,7 +5,7 @@ import unittest
 from django.test import TestCase
 from fileloader.loaders import LoaderFactory, LoaderODS, LoaderXLSX
 import os
-from .help import get_extension
+
 
 class TestODSLoader(unittest.TestCase):
 
@@ -62,16 +62,16 @@ class TestSavingQuestionsFromFile(TestCase):
         SaveQuestionsFromFile(self.loader).save_questions()
         questions = Question.objects.all()
         answer_types = AnswerType.objects.all()
-        categries = Category.objects.all()
+        categories = Category.objects.all()
         answers = Answer.objects.all()
         self.assertEqual(len(questions), len(self.loader.questions))
         self.assertEqual(2, len(answer_types), answer_types)
-        self.assertEqual(1, len(categries), categries)
+        self.assertEqual(1, len(categories), categories)
         # one answer is the same
         self.assertEqual(len(questions) - 1, len(answers))
     
 
-class TestGetExtesion(unittest.TestCase):
+class TestGetExtension(unittest.TestCase):
 
     def test_get_extension_1(self):
         file_name = "super.ext"
