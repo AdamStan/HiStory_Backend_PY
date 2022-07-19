@@ -20,8 +20,8 @@ services:
     command: >
       bash -c "
       pip install -r requirements.txt
-      && python manage.py migrate
-      && python manage.py runserver 0.0.0.0:8000
+      && python manage.py migrate --settings=hi_story.settings.production
+      && python manage.py runserver 0.0.0.0:8000 --settings=hi_story.settings.production
       "
     volumes:
       - .:/code
