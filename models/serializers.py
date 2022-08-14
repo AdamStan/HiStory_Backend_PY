@@ -1,5 +1,3 @@
-import json
-
 from rest_framework import serializers
 from models.models import Category, AnswerType, Question, Answer
 
@@ -13,7 +11,7 @@ class AnswerTypeSerializer(serializers.HyperlinkedModelSerializer):
 class CategorySerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Category
-        fields = ["id", "category"]
+        fields = ["id", "period", "details"]
 
 
 class QuestionSerializer(serializers.HyperlinkedModelSerializer):

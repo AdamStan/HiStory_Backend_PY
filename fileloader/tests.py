@@ -10,25 +10,27 @@ import os
 class TestODSLoader(unittest.TestCase):
 
     def setUp(self):
-        self.loader = LoaderODS("/home/adam/Projects/hi_story/fileloader/file.ods")
+        filePath = os.path.join(os.path.dirname(os.path.realpath(__file__)), "file.ods")
+        self.loader = LoaderODS(filePath)
         self.loader.load()
 
     def test_ods_loader_questions(self):
         questions = self.loader.questions
         self.assertEqual(questions[0].text, "W których latach toczyła się pierwsza wojna punicka?")
-        self.assertEqual(12, len(questions))
+        self.assertEqual(9, len(questions))
 
 
 class TestXLSXLoader(unittest.TestCase):
 
     def setUp(self):
-        self.loader = LoaderXLSX("/home/adam/Projects/hi_story/fileloader/file.ods")
+        filePath = os.path.join(os.path.dirname(os.path.realpath(__file__)), "file.xlsx")
+        self.loader = LoaderXLSX(filePath)
         self.loader.load()
 
     def test_ods_loader_questions(self):
         questions = self.loader.questions
         self.assertEqual(questions[0].text, "W których latach toczyła się pierwsza wojna punicka?")
-        self.assertEqual(12, len(questions))
+        self.assertEqual(8, len(questions))
 
 
 class TemporaryFileManagerTests(unittest.TestCase):
@@ -56,7 +58,8 @@ class TemporaryFileManagerTests(unittest.TestCase):
 class TestSavingQuestionsFromFile(TestCase):
 
     def setUp(self):
-        self.loader = LoaderODS("/home/adam/Projects/hi_story/fileloader/file.ods")
+        filePath = os.path.join(os.path.dirname(os.path.realpath(__file__)), "file.ods")
+        self.loader = LoaderODS(filePath)
 
     def test_questions_saving(self):
         SaveQuestionsFromFile(self.loader).save_questions()

@@ -10,13 +10,12 @@ class Loader:
         self.questions = []
         self.path = path
 
-    @abstractmethod
     def load(self):
         sheet_index = 0
         data_frame = self.read(sheet_index)
         for index, row in data_frame.iterrows():
-            category = Category(category=row['Category'])
-            answer_type = AnswerType(type=row['answer_type'])
+            category = Category(period=row['Period'], details=row['Details'])
+            answer_type = AnswerType(type=row['Answer_type'])
             answer = Answer(answer=row['Answer'], category=category, type=answer_type)
             question = Question(text=row['Text'], correct_answer=answer)
             self.questions.append(question)

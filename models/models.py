@@ -17,13 +17,14 @@ class AnswerType(models.Model):
 class Category(models.Model):
     class Meta:
         db_table = "categories"
-    category = models.CharField(max_length=64)
+    period = models.CharField(max_length=64)
+    details = models.CharField(max_length=128)
 
     def __str__(self):
-        return "[Category: " + self.category + "]"
+        return "[Category: " + self.period + ", " + self.details + "]"
 
     def to_dict(self):
-        return {"id": self.id, "name": self.category}
+        return {"id": self.id, "period": self.period, "details": self.details}
 
 class Answer(models.Model):
     class Meta:
@@ -33,7 +34,7 @@ class Answer(models.Model):
     category = models.ForeignKey(Category, on_delete=models.SET_NULL, null=True)
 
     def category_name(self):
-        return self.category.category
+        return self.category
 
     def __str__(self):
         return "[Answer: " + self.answer + "]"
@@ -52,4 +53,4 @@ class Question(models.Model):
         return self.correct_answer.answer
 
     def category_name(self):
-        return self.correct_answer.category.category
+        return self.correct_answer.category

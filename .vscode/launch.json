@@ -4,6 +4,7 @@
     // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
     "version": "0.2.0",
     "configurations": [
+
         {
             "name": "Python: Django - migrate - local",
             "type": "python",
@@ -22,7 +23,8 @@
             "request": "launch",
             "program": "${workspaceFolder}\\manage.py",
             "args": [
-                "makemigrations"
+                "makemigrations",
+                "--settings=hi_story.settings.local"
             ],
             "django": true,
             "justMyCode": true
@@ -34,6 +36,18 @@
             "program": "${workspaceFolder}\\manage.py",
             "args": [
                 "runserver",
+                "--settings=hi_story.settings.local"
+            ],
+            "django": true,
+            "justMyCode": true
+        },
+        {
+            "name": "Python: Django - run tests",
+            "type": "python",
+            "request": "launch",
+            "program": "${workspaceFolder}\\manage.py",
+            "args": [
+                "test",
                 "--settings=hi_story.settings.local"
             ],
             "django": true,

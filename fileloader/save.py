@@ -32,7 +32,7 @@ class SaveQuestionsFromFile:
         return answer_type
 
     def save_category_without_repetition(self, category):
-        category_from_db = Category.objects.filter(category = category.category)
+        category_from_db = Category.objects.filter(period = category.period, details=category.details)
         if len(category_from_db) > 0:
             return category_from_db[0]
         category.save()
