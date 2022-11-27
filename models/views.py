@@ -55,9 +55,9 @@ class CategoryViewSet(viewsets.ModelViewSet):
     http_method_names = ['get']
 
     def get_queryset(self):
-        category_name = self.request.query_params.get("category")
-        if category_name:
-            return self.queryset.filter(category=category_name)
+        category_period = self.request.query_params.get("period")
+        if category_period:
+            return self.queryset.filter(period=category_period)
         return self.queryset
 
 
@@ -69,8 +69,7 @@ class QuestionViewSet(viewsets.ModelViewSet):
 
     def get_queryset(self):
         queryset = self.queryset
-        categories = self.request.query_params.getlist("category")
-        print(categories)
-        if categories:
-            queryset = self.queryset.filter(correct_answer__category__category__in=categories)
+        periods = self.request.query_params.getlist("periods")
+        if periods:
+            queryset = self.queryset.filter(correct_answer__category__period__in=periods)
         return queryset
