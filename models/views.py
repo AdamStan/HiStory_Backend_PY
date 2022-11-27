@@ -37,9 +37,13 @@ class AnswerViewSet(viewsets.ModelViewSet):
         if type_name:
             queryset = queryset.filter(type__type=type_name)
 
-        category_name = self.request.query_params.get("category")
-        if category_name:
-            queryset = queryset.filter(category__category=category_name)
+        category_period = self.request.query_params.get("period")
+        if category_period:
+            queryset = queryset.filter(category__period=category_period)
+
+        category_details = self.request.query_params.get("details")
+        if category_details:
+            queryset = queryset.filter(category__details=category_details)
 
         return queryset
 
